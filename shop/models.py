@@ -3,6 +3,7 @@ from django.urls import reverse
 
 class Category(models.Model):
     name = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='categories/%y/%m/%d', blank=True)
     slug = models.SlugField(max_length=200, unique=True)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
     class Meta:
@@ -55,7 +56,7 @@ class Product(models.Model):
         return 0
     
 class ProductSpecification(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='specifications')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='specifications', verbose_name='Кат')
     name = models.CharField(max_length=100)  # Название характеристики
     value = models.CharField(max_length=200)  # Значение
     def __str__(self):
