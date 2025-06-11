@@ -1,19 +1,22 @@
 from django.db import models
+from mptt.models import MPTTModel, TreeForeignKey
 from django.urls import reverse
 
-class Category(models.Model):
+class Category(MPTTModel):
     name = models.CharField(max_length=200)
     image = models.ImageField(upload_to='categories/%y/%m/%d', blank=True)
     slug = models.SlugField(max_length=200, unique=True)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
     class Meta:
         ordering = ['name']
+        unique_together = (['slug', 'parent'])
         indexes = [models.Index(fields=['name']),]
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
     def __str__(self):
         return self.name
-    
+    class MPTTMeta:
+        order_insertion_by = ['name']
 class Product(models.Model):
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE, verbose_name='Категория') 
     name = models.CharField(max_length=200, verbose_name='Название товара', help_text='Полное наименование товара для отображения на сайте')

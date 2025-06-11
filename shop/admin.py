@@ -1,9 +1,9 @@
 from django.contrib import admin
-from django.utils.html import format_html
+from django_mptt_admin.admin import DjangoMpttAdmin
 from .models import Category, Product, ProductSpecification
 
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(DjangoMpttAdmin):
     list_display = ['name', 'slug', 'parent', 'display_products_count']
     list_filter = ('parent',)
     search_fields = ('name', 'slug')

@@ -9,10 +9,10 @@
     <title>Магазин - Главная</title>
 </head>
 <body>
-{% block mainmenu %}
-     <header class="header">
+    <header class="header">
         <img src="{% static 'shop/images/logo.png' %}" alt="Логотип магазина" class="logo">
     </header>
+    
     <main class="main-content">
         <h1 class="categories-title">Категории товаров</h1>
 
@@ -30,9 +30,5 @@
                 {% endfor %}
         </div>
     </main>
-{% endblock mainmenu %}
-
-
-
 </body>
 </html>

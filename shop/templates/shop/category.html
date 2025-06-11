@@ -1,0 +1,38 @@
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'shop/css/styles.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог товаров</title>
+</head>
+<body>
+    <header class="header">
+        <!--<img src="logo.png" alt="Логотип магазина" class="logo"> -->
+        
+        <div class="subcategories">
+        {% for subcategory in subcategories %}
+            <!-- Подкатегория 1 -->
+            <a href="{% url 'category' subcategory.slug %}" class="subcategory-item">
+                <img src="{{ subcategory.image.url }}" class="subcategory-img">
+            </a>
+        {% endfor %}    
+        </div>
+    </header>
+    
+    <main class="main-content">
+        <h1 class="catalog-title">Популярные товары</h1>
+        {% if products %}
+        <div class="products-grid">
+            <!-- Товар 1 -->
+            {% for product in products %}
+
+            <a href="" class="product-item">
+                <img src="{{ product.image.url }}" class="product-img">
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </main>
+</body>
+</html>
