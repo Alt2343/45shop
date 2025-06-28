@@ -1,0 +1,189 @@
+{% extends "shop/base.html" %}
+
+{% block title %}
+  Checkout
+{% endblock %}
+
+{% block content %}
+  <div class="checkout-container">
+    <h1 class="checkout-title">Checkout</h1>
+
+    <div class="checkout-grid">
+      <!-- Order Summary Section -->
+      <div class="order-summary">
+        <h3 class="summary-title">Your Order</h3>
+        <ul class="order-items">
+          {% for item in cart %}
+            <li class="order-item">
+              <span class="item-quantity">{{ item.quantity }}x</span>
+              <span class="item-name">{{ item.product.name }}</span>
+              <span class="item-price">${{ item.total_price }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+        <div class="order-total">
+          <span>Total:</span>
+          <span class="total-price">${{ cart.get_total_price }}</span>
+        </div>
+      </div>
+
+      <!-- Order Form Section -->
+      <form method="post" class="order-form">
+        <h3 class="form-title">Shipping Details</h3>
+        {% for field in form %}
+          <div class="form-field">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.errors %}
+              <div class="error">{{ field.errors }}</div>
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        <button type="submit" class="submit-btn">Place Order</button>
+        {% csrf_token %}
+      </form>
+    </div>
+  </div>
+<style>
+  /* Checkout Page Styles */
+.checkout-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.checkout-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+}
+
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.order-summary {
+  background: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.summary-title {
+  color: #2c3e50;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.order-items {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed #eee;
+}
+
+.item-quantity {
+  font-weight: bold;
+  color: #7f8c8d;
+}
+
+.item-name {
+  flex-grow: 1;
+  padding: 0 1rem;
+}
+
+.order-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 1rem 0;
+  border-top: 2px solid #eee;
+}
+
+.total-price {
+  color: #e74c3c;
+}
+
+.order-form {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-title {
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+.form-field {
+  margin-bottom: 1rem;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #34495e;
+}
+
+.form-field input,
+.form-field textarea,
+.form-field select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-field input:focus,
+.form-field textarea:focus,
+.form-field select:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52,152,219,0.2);
+}
+
+.error {
+  color: #e74c3c;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.submit-btn {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.submit-btn:hover {
+  background: #2980b9;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .checkout-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+{% endblock %}
